@@ -8,6 +8,7 @@ object HelloWorld extends App {
   val app: HttpApp[Any, Nothing] = HttpApp.collect {
     case Method.GET -> Root / "text" => Response.text("Hello World!")
     case Method.GET -> Root / "json" => Response.jsonString("""{"greetings": "Hello World!"}""")
+    case req @ Method.POST -> Root / "echo" => Response.http(content = req.data.content) //the way you can access to the request data (payload ..)
   }
 
   // Run it like any simple app
